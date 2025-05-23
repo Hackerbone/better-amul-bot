@@ -2,7 +2,7 @@ name: Amul Bot
 
 on:
   schedule:
-    - cron: '*/5 * * * *'  # every 30 minutes
+    - cron: '0 * * * *'  # every 1 hour
   workflow_dispatch:  # allows manual triggering
 
 jobs:
@@ -19,14 +19,3 @@ jobs:
 
       - name: Run Docker container
         run: docker run --rm -v $(pwd):/app amul-bot python amul.py --github-actions
-
-      - name: Commit state
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
-        run: |
-          git config --global user.name "amul-bot"
-          git config --global user.email "amul-bot@github.com"
-          git remote set-url origin https://${{ secrets.GH_USERNAME }}:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}
-          git add amul_state.json
-          git diff --cached --quiet || git commit -m "Update Amul product state [skip ci]"
-          git push 
