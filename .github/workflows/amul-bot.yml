@@ -1,8 +1,6 @@
 name: Amul Bot
 
 on:
-  schedule:
-    - cron: '0 * * * *'  # every 1 hour
   workflow_dispatch:  # allows manual triggering
 
 jobs:
